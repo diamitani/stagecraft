@@ -1,0 +1,79 @@
+/**
+ * Stagecraft design tokens. Every text color passes WCAG AA (4.5:1) on white and on the warm tint.
+ * Fonts are system fonts, so nothing is downloaded and the pages paint fast.
+ */
+:root {
+  --ap-bg: #ffffff;
+  --ap-bg-elevated: #ffffff;
+  --ap-bg-muted: #faf6f0;
+  --ap-ink: #1c1917;
+  --ap-ink-soft: #44403c;
+  --ap-ink-faint: #6b645d;
+  --ap-brand: #b6380e; /* stage-light orange: 5.6:1 on white */
+  --ap-brand-deep: #8f2b0a;
+  --ap-gold: #f5b301;
+  --ap-gold-soft: #fff6d6;
+  --ap-gold-ink: #7a5600;
+  --ap-line: #e7e0d6;
+  --ap-card: #ffffff;
+  --ap-success: #15803d;
+  --ap-warn: #b45309;
+  --ap-danger: #b91c1c;
+  --ap-radius: 14px;
+  --ap-shadow: 0 1px 2px rgb(28 25 23 / 0.05), 0 12px 32px -18px rgb(60 40 10 / 0.22);
+  --ap-shadow-sm: 0 1px 3px rgb(28 25 23 / 0.08);
+  --ap-shadow-lg: 0 6px 24px -6px rgb(60 40 10 / 0.18);
+  --ap-shadow-xl: 0 24px 60px -24px rgb(60 40 10 / 0.35);
+  --ap-font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --ap-font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: var(--ap-bg);
+  color: var(--ap-ink);
+  font-family: var(--ap-font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+html { scroll-behavior: smooth; }
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: -4rem;
+  z-index: 2000;
+  border-radius: 6px;
+  background: var(--ap-ink);
+  color: var(--ap-bg);
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+}
+.skip-link:focus { top: 1rem; }
+
+.ap-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ap-brand);
+}
+
+.ap-paper {
+  background-color: var(--ap-bg-muted);
+  background-image: radial-gradient(rgb(122 86 0 / 0.06) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.ap-card {
+  background: var(--ap-card);
+  border: 1px solid var(--ap-line);
+  border-radius: var(--ap-radius);
+  box-shadow: var(--ap-shadow-sm);
+}
+
+.ap-no-scrollbar { scrollbar-width: none; }
+.ap-no-scrollbar::-webkit-scrollbar { display: none; }
