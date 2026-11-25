@@ -1,31 +1,85 @@
 /**
- * Stagecraft design tokens. Every text color passes WCAG AA (4.5:1) on white and on the warm tint.
- * Fonts are system fonts, so nothing is downloaded and the pages paint fast.
+ * Artispreneur Design System v2 — "Laurel".
+ *
+ * Built from the artispreneur-brand skill (2026-10-02 redesign):
+ *   Artispreneur Red  #C0272D — headlines, primary actions, the "A"
+ *   Artispreneur Gold #F5C100 — laurel, borders, premium accents (never body text)
+ *   Charcoal #1A1A1A · Warm Gray #4A4A4A · Parchment #F9F6EF · Gold Tint #FFF8D6
+ * Type: Playfair Display (display/headings) + Inter (UI/body).
+ * Every text token below passes WCAG 2.2 AA (4.5:1) on white and parchment.
+ * Token NAMES are unchanged from v1 ("signal") so every existing screen
+ * re-skins automatically; only values changed.
  */
-:root {
+
+:root,
+[data-theme="laurel"],
+[data-theme="signal"] {
   --ap-bg: #ffffff;
   --ap-bg-elevated: #ffffff;
-  --ap-bg-muted: #faf6f0;
-  --ap-ink: #1c1917;
-  --ap-ink-soft: #44403c;
-  --ap-ink-faint: #6b645d;
-  --ap-brand: #b6380e; /* stage-light orange: 5.6:1 on white */
-  --ap-brand-deep: #8f2b0a;
-  --ap-gold: #f5b301;
-  --ap-gold-soft: #fff6d6;
-  --ap-gold-ink: #7a5600;
-  --ap-line: #e7e0d6;
+  --ap-bg-muted: #f9f6ef; /* parchment */
+  --ap-ink: #1a1a1a; /* charcoal */
+  --ap-ink-soft: #4a4a4a; /* warm gray */
+  --ap-ink-faint: #6b665c; /* 5.7:1 on white, 5.3:1 on parchment */
+  --ap-brand: #c0272d; /* artispreneur red */
+  --ap-brand-deep: #9a1f24;
+  --ap-gold: #f5c100; /* artispreneur gold — fills, borders, laurel only */
+  --ap-gold-soft: #fff8d6; /* gold tint */
+  --ap-gold-ink: #7a5c00; /* readable gold for text/icons: 6.3:1 on white */
+  --ap-line: #e8e1d3; /* warm hairline */
   --ap-card: #ffffff;
   --ap-success: #15803d;
   --ap-warn: #b45309;
   --ap-danger: #b91c1c;
   --ap-radius: 14px;
-  --ap-shadow: 0 1px 2px rgb(28 25 23 / 0.05), 0 12px 32px -18px rgb(60 40 10 / 0.22);
-  --ap-shadow-sm: 0 1px 3px rgb(28 25 23 / 0.08);
+  --ap-radius-sm: 6px; /* inputs, chips */
+  --ap-radius-md: 10px; /* buttons */
+  --ap-radius-full: 9999px; /* pills, badges */
+  --ap-shadow: 0 1px 2px rgb(26 26 26 / 0.05),
+    0 12px 32px -18px rgb(60 40 10 / 0.22);
+  --ap-shadow-sm: 0 1px 3px rgb(26 26 26 / 0.08);
   --ap-shadow-lg: 0 6px 24px -6px rgb(60 40 10 / 0.18);
   --ap-shadow-xl: 0 24px 60px -24px rgb(60 40 10 / 0.35);
-  --ap-font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-  --ap-font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --ap-space-1: 4px;
+  --ap-space-2: 8px;
+  --ap-space-3: 12px;
+  --ap-space-4: 16px;
+  --ap-space-6: 24px;
+  --ap-space-8: 32px;
+  --ap-space-12: 48px;
+  --ap-space-16: 64px;
+  --ap-space-24: 96px;
+  --ap-text-xs: 12px;
+  --ap-text-sm: 14px;
+  --ap-text-base: 16px;
+  --ap-text-lg: 18px;
+  --ap-text-xl: 22px;
+  --ap-text-2xl: 28px;
+  --ap-text-3xl: 36px;
+  --ap-text-4xl: 48px;
+  --ap-text-5xl: 60px;
+  --ap-leading-tight: 1.15;
+  --ap-leading-snug: 1.35;
+  --ap-leading-normal: 1.55;
+  --ap-leading-loose: 1.7;
+  --ap-z-raised: 10;
+  --ap-z-overlay: 100;
+  --ap-z-modal: 1000;
+  --ap-z-toast: 2000;
+  --ap-transition-fast: 120ms ease;
+  --ap-transition-base: 200ms ease;
+  --ap-transition-slow: 350ms ease;
+  --ap-font-display: var(--font-display), "Playfair Display", Georgia, serif;
+  --ap-font-sans: var(--font-sans), "Plus Jakarta Sans", "Inter", Arial, ui-sans-serif, system-ui, sans-serif;
+  /* Dashboard shell tokens (2026-11-18 redesign; additive only, same naming
+     scheme — no rebrand, no value changes above this line). */
+  --ap-sidebar-w: 288px;
+  --ap-rail-w: 76px;
+  --ap-topbar-h: 56px;
+  --ap-thread-rail-w: 288px;
+  --ap-thread-rail-collapsed-w: 64px;
+  --ap-success-soft: #f0fdf4;
+  --ap-danger-soft: #fef2f2;
+  --ap-overlay: rgb(13 13 18 / 0.6);
 }
 
 @tailwind base;
@@ -45,16 +99,107 @@ html { scroll-behavior: smooth; }
   position: fixed;
   left: 1rem;
   top: -4rem;
-  z-index: 2000;
-  border-radius: 6px;
+  z-index: var(--ap-z-toast);
+  border-radius: var(--ap-radius-sm);
   background: var(--ap-ink);
   color: var(--ap-bg);
   padding: 0.75rem 1rem;
   font-weight: 700;
+  transition: top var(--ap-transition-base);
 }
+
 .skip-link:focus { top: 1rem; }
 
+/* Console motion layer: restrained, feedback-only. Gated on no-preference. */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-message-in {
+    animation: ap-message-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .animate-drawer-in {
+    animation: ap-drawer-in 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .animate-fade-in {
+    animation: ap-fade-in 0.2s ease-out both;
+  }
+}
+@keyframes ap-message-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes ap-drawer-in {
+  from {
+    transform: translateX(-16px);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes ap-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.font-display {
+  font-family: var(--ap-font-display);
+  letter-spacing: -0.012em;
+  font-feature-settings: "lnum" 1;
+}
+
+/* Adopted type utilities from the design-system bundles (signal-mapped). */
+.type-overline {
+  font-size: var(--ap-text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ap-brand);
+  line-height: var(--ap-leading-snug);
+}
+.type-caption {
+  font-size: var(--ap-text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ap-ink-faint);
+  line-height: var(--ap-leading-snug);
+}
+.type-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+  background: var(--ap-bg-muted);
+  padding: 2px 6px;
+  border-radius: var(--ap-radius-sm);
+}
+
+::selection {
+  background: var(--ap-gold-soft);
+  color: var(--ap-ink);
+}
+
+/* SaaS hygiene: visible keyboard focus everywhere. */
+:focus-visible {
+  outline: 2px solid var(--ap-brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+
+/* ------------------------------------------------------------------------
+ * Design System v2 ("Laurel") utilities
+ * ---------------------------------------------------------------------- */
+
+/* Eyebrow label: small caps in red, used above every section title. */
 .ap-eyebrow {
+  font-family: var(--ap-font-sans);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -62,18 +207,95 @@ html { scroll-behavior: smooth; }
   color: var(--ap-brand);
 }
 
+/* Gold laurel rule: a short gold bar used under display headings. */
+.ap-rule {
+  display: block;
+  width: 48px;
+  height: 3px;
+  border-radius: 9999px;
+  background: var(--ap-gold);
+}
+
+/* Parchment paper surface with a faint editorial grain. */
 .ap-paper {
   background-color: var(--ap-bg-muted);
-  background-image: radial-gradient(rgb(122 86 0 / 0.06) 1px, transparent 1px);
+  background-image: radial-gradient(rgb(122 92 0 / 0.06) 1px, transparent 1px);
   background-size: 18px 18px;
 }
 
+/* Premium card: white, warm hairline, gold edge on hover/focus-within. */
 .ap-card {
   background: var(--ap-card);
   border: 1px solid var(--ap-line);
   border-radius: var(--ap-radius);
   box-shadow: var(--ap-shadow-sm);
+  transition: border-color var(--ap-transition-base), box-shadow var(--ap-transition-base), transform var(--ap-transition-base);
+}
+.ap-card-interactive:hover,
+.ap-card-interactive:focus-within {
+  border-color: rgb(245 193 0 / 0.75);
+  box-shadow: var(--ap-shadow-lg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ap-card-interactive:hover { transform: translateY(-2px); }
 }
 
+/* Form field: same look as the contacts CRM fields, reusable everywhere.
+   In the components layer so Tailwind utilities (pl-9, h-9, py-0) can override it. */
+@layer components {
+.ap-input {
+  border-radius: var(--ap-radius);
+  border: 1px solid var(--ap-line);
+  background: var(--ap-card);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--ap-ink);
+}
+.ap-input::placeholder { color: var(--ap-ink-faint); }
+.ap-input:focus { border-color: var(--ap-brand); outline: none; box-shadow: 0 0 0 3px rgb(192 39 45 / 0.12); }
+}
+
+/* Contract document: legal-page typography (The Artist Vault). */
+.ap-contract { font-size: 0.95rem; line-height: 1.7; color: var(--ap-ink); }
+.ap-contract h1 { font-family: var(--ap-font-display); font-size: 1.5rem; font-weight: 700; margin: 0 0 1rem; text-align: center; }
+.ap-contract h2 { font-family: var(--ap-font-display); font-size: 1.15rem; font-weight: 700; margin: 1.75rem 0 0.75rem; }
+.ap-contract h3 { font-weight: 700; margin: 1.25rem 0 0.5rem; }
+.ap-contract p { margin: 0.75rem 0; }
+.ap-contract ul, .ap-contract ol { margin: 0.75rem 0; padding-left: 1.5rem; }
+.ap-contract ul { list-style: disc; }
+.ap-contract ol { list-style: decimal; }
+.ap-contract li { margin: 0.25rem 0; }
+.ap-contract blockquote { margin: 0.75rem 0; padding-left: 1rem; border-left: 2px solid var(--ap-line); }
+.ap-contract hr { margin: 1.5rem 0; border-color: var(--ap-line); }
+.ap-contract table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; font-size: 0.875rem; }
+.ap-contract th, .ap-contract td { border: 1px solid var(--ap-line); padding: 0.4rem 0.6rem; text-align: left; vertical-align: top; }
+.ap-contract th { background: var(--ap-bg-muted); }
+.ap-contract table:has(th:empty:first-child) thead { display: none; }
+.ap-contract table:has(th:empty:first-child) td:first-child { width: 34%; color: var(--ap-ink-soft); }
+
+@media print {
+  body * { visibility: hidden; }
+  .ap-print-area, .ap-print-area * { visibility: visible; }
+  .ap-print-area { position: absolute; inset: 0 auto auto 0; width: 100%; border: 0 !important; box-shadow: none !important; padding: 0 !important; }
+  .ap-no-print { display: none !important; }
+}
+
+/* Dark charcoal stage for hero product shots. */
+.ap-stage {
+  background:
+    radial-gradient(1200px 400px at 80% -10%, rgb(192 39 45 / 0.35), transparent 60%),
+    radial-gradient(800px 300px at 0% 110%, rgb(245 193 0 / 0.18), transparent 60%),
+    #141414;
+}
+
+/* Progress ring helper (conic) for record completeness. */
+.ap-ring {
+  --pct: 0;
+  background: conic-gradient(var(--ap-brand) calc(var(--pct) * 1%), var(--ap-line) 0);
+  border-radius: 9999px;
+}
+
+/* Hide scrollbars on horizontal chip rows while keeping them scrollable. */
 .ap-no-scrollbar { scrollbar-width: none; }
 .ap-no-scrollbar::-webkit-scrollbar { display: none; }

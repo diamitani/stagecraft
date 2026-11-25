@@ -1,7 +1,10 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: ["./app/**/*.{js,ts,jsx,tsx,mdx}", "./components/**/*.{js,ts,jsx,tsx,mdx}"],
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
   theme: {
     extend: {
       colors: {
@@ -16,6 +19,7 @@ const config: Config = {
         gold: "var(--ap-gold)",
         "gold-soft": "var(--ap-gold-soft)",
         "gold-ink": "var(--ap-gold-ink)",
+        parchment: "var(--ap-bg-muted)",
         success: "var(--ap-success)",
         warn: "var(--ap-warn)",
         danger: "var(--ap-danger)",
@@ -23,10 +27,13 @@ const config: Config = {
         card: "var(--ap-card)",
       },
       fontFamily: {
-        display: ["var(--ap-font-display)"],
-        sans: ["var(--ap-font-sans)"],
+        display: ["var(--font-display)", "Playfair Display", "Georgia", "serif"],
+        serif: ["var(--font-display)", "Playfair Display", "Georgia", "serif"],
+        sans: ["var(--font-sans)", "Plus Jakarta Sans", "Inter", "Arial", "ui-sans-serif", "system-ui", "sans-serif"],
       },
-      borderRadius: { ap: "var(--ap-radius)" },
+      borderRadius: {
+        ap: "var(--ap-radius)",
+      },
       boxShadow: {
         ap: "var(--ap-shadow)",
         "ap-lg": "var(--ap-shadow-lg)",

@@ -12,6 +12,7 @@
 --   confirmed -> booked (deposit paid, or no deposit was asked for)
 --   declined  -> the venue said no
 --   cancelled -> either side called it off
+-- artist_listings      : public artist pages, shared with Artispreneur (see below).
 -- stagecraft_waitlist  : interest from venues, artists, sponsors and fans
 --                        for the parts of Stagecraft that ship next.
 --
@@ -21,6 +22,38 @@
 -- other party of a booking.
 --
 -- Additive and idempotent.
+
+-- artist_listings : public artist pages (/artists/<slug>). This is the same table the Artispreneur
+--                   artist directory uses. If you point Stagecraft at the Artispreneur Supabase
+--                   project it already exists and this statement does nothing. Stagecraft only
+--                   reads it; artists create and edit their page on artispreneur.com.
+create table if not exists public.artist_listings (
+  id             uuid primary key default gen_random_uuid(),
+  slug           text not null unique check (slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$'),
+  name           text not null,
+  genre          text,
+  city           text,
+  bio            text,
+  image_url      text,
+  website_url    text,
+  booking_email  text,
+  contact_email  text,
+  links          jsonb not null default '{}'::jsonb,
+  status         text not null default 'unclaimed' check (status in ('unclaimed', 'claimed')),
+  owner_user_id  text,
+  is_published   boolean not null default true,
+  source         text not null default 'user' check (source in ('user', 'import')),
+  claimed_at     timestamptz,
+  created_at     timestamptz not null default now(),
+  updated_at     timestamptz not null default now(),
+  constraint artist_listings_owner_matches_status
+    check ((status = 'claimed') = (owner_user_id is not null))
+);
+create unique index if not exists artist_listings_owner_idx
+  on public.artist_listings (owner_user_id) where owner_user_id is not null;
+create index if not exists artist_listings_published_idx
+  on public.artist_listings (is_published, name);
+alter table public.artist_listings enable row level security;
 
 create table if not exists public.venues (
   id               uuid primary key default gen_random_uuid(),
