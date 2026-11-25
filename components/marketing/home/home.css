@@ -1,0 +1,184 @@
+/*
+ * Homepage v3 — centred white / red / gold look (1120px column).
+ * Originally a warm editorial look; retheme only, the layout and copy are unchanged.
+ * Layout cues: flat centred nav, glowing gradient panels, numbered steps,
+ * dark pricing band. Palette stays on the Artispreneur brand (red #C0272D,
+ * gold #F5C100) over a white base with a charcoal dark band.
+ * Everything here is scoped to `.hv3` so no other page changes.
+ */
+
+.hv3 {
+  --hv-cream: #ffffff;
+  --hv-cream-2: #f7f5f1;
+  --hv-card: #ffffff;
+  --hv-line: #e8e4dc;
+  --hv-espresso: #1c1917;
+  --hv-espresso-2: #292524;
+  --hv-ink: #1c1917;
+  --hv-ink-soft: #57534e;
+  background: var(--hv-cream);
+  color: var(--hv-ink);
+}
+
+/* Reused components: lighter editorial serif headings, transparent bands. */
+.hv3 h2.font-display,
+.hv3 h3.font-display.hv-serif {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.hv3 section.bg-white,
+.hv3 .hv-band-clear > section {
+  background: transparent;
+}
+.hv3 .hv-band-clear > section {
+  border-color: transparent;
+}
+
+/* Small pill label above section titles (icon + text). */
+.hv-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--hv-line);
+  background: var(--hv-card);
+  border-radius: 9999px;
+  padding: 0.3rem 0.8rem 0.3rem 0.45rem;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--hv-ink-soft);
+  box-shadow: 0 1px 2px rgb(42 26 16 / 0.05);
+}
+.hv-chip-dot {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: var(--ap-brand);
+  color: #fff;
+}
+.hv-dark .hv-chip {
+  background: rgb(255 255 255 / 0.06);
+  border-color: rgb(255 255 255 / 0.14);
+  color: rgb(255 255 255 / 0.8);
+}
+
+/* Warm vertical light streaks behind the hero. */
+.hv-streaks {
+  background:
+    radial-gradient(60% 55% at 50% 0%, rgb(245 193 0 / 0.22), transparent 70%),
+    radial-gradient(40% 50% at 15% 10%, rgb(192 39 45 / 0.16), transparent 70%),
+    radial-gradient(40% 50% at 85% 10%, rgb(239 120 60 / 0.18), transparent 70%),
+    repeating-linear-gradient(
+      90deg,
+      rgb(255 255 255 / 0) 0 38px,
+      rgb(255 255 255 / 0.45) 38px 40px
+    );
+  mask-image: linear-gradient(to bottom, #000 30%, transparent 100%);
+}
+
+/* Soft glowing gradient surface used for feature visuals and the CTA. */
+.hv-glow {
+  background:
+    radial-gradient(70% 80% at 20% 15%, #ffd36b 0%, transparent 60%),
+    radial-gradient(70% 80% at 85% 30%, #f07a4a 0%, transparent 60%),
+    radial-gradient(80% 90% at 55% 100%, #c0272d 0%, transparent 65%),
+    #f6c7a4;
+}
+.hv-glow-soft {
+  background:
+    radial-gradient(70% 80% at 15% 10%, #ffe7a8 0%, transparent 60%),
+    radial-gradient(70% 80% at 90% 40%, #f8b48c 0%, transparent 62%),
+    radial-gradient(80% 90% at 50% 110%, #e9787a 0%, transparent 65%),
+    #fbe3cf;
+}
+.hv-glow-dark {
+  background:
+    radial-gradient(70% 70% at 80% 0%, rgb(245 193 0 / 0.28), transparent 60%),
+    radial-gradient(60% 80% at 0% 100%, rgb(192 39 45 / 0.45), transparent 60%),
+    var(--hv-espresso);
+}
+
+/* Glassy card that sits on a glow surface. */
+.hv-glass {
+  background: rgb(255 253 249 / 0.82);
+  border: 1px solid rgb(255 255 255 / 0.7);
+  box-shadow: 0 24px 60px -24px rgb(60 20 10 / 0.45);
+  backdrop-filter: blur(10px);
+}
+
+/* Gradient ring around the hero prompt box (first child of the console). */
+.hv-console > div > div:first-child {
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(120deg, #c0272d, #f07a4a 35%, #f5c100 65%, #c0272d) border-box;
+  box-shadow: 0 30px 80px -30px rgb(192 39 45 / 0.45);
+}
+
+/* Fanned deliverable cards in the hero. */
+.hv-fan-card {
+  transform-origin: 50% 120%;
+  transition: transform 400ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.hv-fan:hover .hv-fan-card {
+  translate: 0 -6px;
+}
+
+/* Logo marquee. */
+.hv-marquee {
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.hv-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: hv-marquee 32s linear infinite;
+}
+@keyframes hv-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Sticker chips on the statement section. */
+.hv-sticker {
+  display: inline-block;
+  border-radius: 10px;
+  background: var(--hv-espresso);
+  color: #fff;
+  padding: 0.35rem 0.75rem;
+  font-family: var(--ap-font-display);
+  font-style: italic;
+  font-size: 14px;
+  box-shadow: 0 8px 20px -8px rgb(36 20 12 / 0.6);
+}
+
+/* Scroll reveal: progressive enhancement, no JS, content always visible
+   where the browser lacks scroll-driven animations. */
+@supports (animation-timeline: view()) {
+  .hv-reveal {
+    animation: hv-rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+}
+@keyframes hv-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hv-marquee-track,
+  .hv-reveal {
+    animation: none;
+  }
+  .hv-fan-card {
+    transition: none;
+  }
+}
